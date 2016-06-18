@@ -9,8 +9,12 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
     respond_to do |format|
       format.html { render :show }
-      format.json { render json: @post.to_json(only: [:title, :description, :id],
-                              include: [author: { only: [:name]}]) }
+      # initially used .to_json to serialize
+      # format.json { render json: @post.to_json(only: [:title, :description, :id],
+      #                         include: [author: { only: [:name]}]) }
+      
+      # now use AMS to implicitly use ActiveModel::Serializer to render post to JSON
+      format.json { render json: @post }
     end
   end
 
